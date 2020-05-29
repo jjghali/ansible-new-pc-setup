@@ -1,0 +1,89 @@
+- name: APT - Change mirror address
+  become: yes
+  replace:
+    path: /etc/apt/sources.list        
+    regexp: 'http:\/\/us\.archive\.ubuntu\.com\/ubuntu\/'
+    replace: 'http://ubuntu.mirror.iweb.ca/'
+    backup: yes
+
+- name: APT - Update repositories cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: APT - Update packages
+  apt:
+    upgrade: full
+  become: yes  
+
+- name: APT - Install packages
+  apt:
+    name: "{{ apt.packages }}"  
+  become: yes
+
+- name: Flatpak - Install package
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: "{{ flatpak.method }}"
+  with_items: "{{ flatpak.packages }}"
+
+- name: Docker - Add apt key
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  become: yes
+
+- name: Docker - Add PPA
+  shell: | 
+   add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) \
+     stable"
+  become: yes
+
+- name: Docker - Update APT repositories cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Docker - Install Docker packages
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ docker.packages }}"
+  become: yes
+
+- name: Docker - Add current user to docker group
+  shell: sudo usermod -aG docker $USER
+  become: yes
+
+- name: Docker - Install docker-compose
+  pip:
+    name: docker-compose    
+  become: yes
+
+- name: NVM - Installing NVM
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+- name: NVM - Configure for zsh Part 1
+  lineinfile: 
+    path: "{{ansible_env.HOME}}/.zshrc"
+    line: 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")'
+
+- name: NVM - Configure for zsh Part 2
+  lineinfile: 
+    path: "{{ansible_env.HOME}}/.zshrc"
+    line: '"[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm'
+    
+- name: NVM - Configure for bash Part 1
+  lineinfile: 
+    path: "{{ansible_env.HOME}}/.bashrc"
+    line: 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")'
+
+- name: NVM - Configure for bash Part 2
+  lineinfile: 
+    path: "{{ansible_env.HOME}}/.bashrc"
+    line: '"[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm'
+    
+
