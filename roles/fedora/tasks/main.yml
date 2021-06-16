@@ -1,0 +1,45 @@
+- name: DNF - Update packages
+  dnf:
+    name: "*"
+    state: latest
+  become: yes  
+
+- name: DNF - Enable RPMFusion for Fedora 34 (1 of 2)
+  dnf:
+    name: 'https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-34.noarch.rpm'
+    state: present
+  become: yes
+
+- name: DNF - Enable RPMFusion for Fedora 34 (2 of 2)
+  dnf:
+    name: 'https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-34.noarch.rpm'
+    state: present
+  become: yes
+
+- name: DNF - Install the 'Development tools' package group
+  dnf:
+    name: "{{ dnf.packages }}"
+    state: present
+  become: yes
+
+- name: DNF - Install packages
+  dnf:
+    name: "{{ dnf.packages }}"
+    state: present
+  become: yes
+
+- name: DNF - Install packages
+  dnf:
+    name: "{{ dnf.packages }}"
+    state: present
+  become: yes
+
+- name: Docker - Configure DNF repository
+  dnf: 
+    name: "{{ docker.packages }}"
+    state: present
+  become: yes
+
+- name: Docker - Add current user to docker group
+  shell: sudo usermod -aG docker $USER
+  become: yes

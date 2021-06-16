@@ -1,0 +1,4 @@
+pip:
+    packages:
+      - "docker-compose"
+      - "virtualenv"

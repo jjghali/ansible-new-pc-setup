@@ -1,0 +1,10 @@
+---
+all:
+  children:
+    fedora:
+      hosts:
+        pc:
+          ansible_host: ip
+          ansible_ssh_user: username
+          ansible_ssh_pass: password
+          ansible_sudo_pass: password          

@@ -1,0 +1,3 @@
+- name: PIP - Install packages
+  pip:
+    name: "{{ pip.packages }}"

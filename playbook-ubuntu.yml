@@ -1,0 +1,9 @@
+---
+- hosts: ubuntu
+  roles:
+    - ubuntu
+    - flatpak
+    - nvm
+    - pip
+    - snap
+  

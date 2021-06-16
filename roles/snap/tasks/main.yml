@@ -1,0 +1,11 @@
+- name: Snap - Install packages (classic method)
+  snap:
+    name: "{{ snap.classic }}"
+    classic: yes
+  become: yes
+
+- name: Snap - Install packages
+  snap:
+    name: "{{ snap.ordinary }}"
+    classic: no
+  become: yes

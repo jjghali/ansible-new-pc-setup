@@ -1,0 +1,8 @@
+---
+- hosts: fedora
+  roles:
+    - fedora
+    - flatpak
+    - nvm
+    - pip
+    - snap

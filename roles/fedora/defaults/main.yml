@@ -1,0 +1,16 @@
+dnf:
+    packages:
+        - "htop"
+        - "zsh"
+        - "powertop"
+        - "virtualbox"
+        - "git"
+        - "snapd"
+        - "dnf-plugins-core"
+
+docker:
+    repo-link: "https://download.docker.com/linux/fedora/docker-ce.repo"
+    packages:
+        - "docker-ce"
+        - "docker-ce-cli"
+        - "containerd.io"

@@ -1,0 +1,7 @@
+flatpak:
+    source: flathub
+    method: user
+    packages:
+        - "com.discordapp.Discord"
+        - "com.parsecgaming.parsec"
+        - "org.gtk.Gtk3theme.Pop-dark"
