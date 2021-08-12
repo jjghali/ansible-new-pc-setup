@@ -1,5 +1,5 @@
 ---
-- hosts: fedora
+- hosts: localhost
   roles:
     - fedora
     - flatpak

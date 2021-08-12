@@ -3,6 +3,3 @@ snap:
         - "postman"
         - "signal-desktop"
         - "zoom-client"
-    ordinary:
-        - "heroku"
-        - "slack"

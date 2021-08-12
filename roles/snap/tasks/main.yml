@@ -2,10 +2,5 @@
   snap:
     name: "{{ snap.classic }}"
     classic: yes
-  become: yes
+  become: no
 
-- name: Snap - Install packages
-  snap:
-    name: "{{ snap.ordinary }}"
-    classic: no
-  become: yes
